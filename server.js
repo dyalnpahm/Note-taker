@@ -8,22 +8,22 @@ const PORT = 3001;
 const app = express ();
 
 
-app.use(express.json())
+app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(express.static('public'));
 
 
 
 app.get('*',(req, res) =>{
-    res.sendFile(path.join(__dirname,'/public/index.html'));
+    res.sendFile(path.join(__dirname,'/Develop/public/index.html'));
 });
 
-app.get('/notes',(req,res)=>{
-    res.sendFile(path.join(__dirname,'/public/notes.html'));
+app.get('/notes',(req, res)=>{
+    res.sendFile(path.join(__dirname,'/Develop/public/notes.html'));
 });
 
 app.get('/', (req, res) =>{
-    res.sendFile(path.join(__dirname,'/db/db.json'));
+    res.sendFile(path.join(__dirname,'/Develop/db/db.json'));
 });
 
 app.get('/api/notes', (req, res) => {
@@ -38,13 +38,13 @@ app.get('/api/notes', (req, res) => {
     console.info(`${req.method} request received to add a note`);
 
     let newNote = req.body;
-    let noteList = json.parse(fs.readFileSync('./db/db.json','utf8'));
+    let noteList = json.parse(fs.readFileSync('/Develop/db/db.json','utf8'));
     let noteLength =(noteList.length).tostring();
 
-    newNote.id=noteLength;
+    newNote.id = noteLength;
     noteList.push(newNote);
-    const noteString= JSON.stringify(noteList);
-    fs.writeFileSync('./db/db.json'), 
+    const noteString = JSON.stringify(noteList);
+    fs.writeFileSync('./Develop/db/db.json'), 
     
     res.json(noteList);
 });
@@ -52,3 +52,4 @@ app.get('/api/notes', (req, res) => {
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });
+
